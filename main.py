@@ -12,8 +12,17 @@ def main():
     while True:
         print_grid(grid)
 
-        if check_winner(grid) is not None:
-            print('\nGood game. Thanks for playing!')
+        # Check for win
+        is_winner = check_winner(grid)
+
+        if is_winner is not None:
+            print(
+                f'\n{"x won!" if is_winner == "x" else "o won!"} Thanks for playing!')
+            break
+
+        # Check for draw
+        if check_if_draw(grid):
+            print('\nIt\'s a draw! Thanks for playing!')
             break
 
         # User input
@@ -36,6 +45,8 @@ def main():
             grid[position - 1] = 'x' if x_turn else 'o'
 
             x_turn = not x_turn
+        else:
+            print('\nPlease type a number from 1 to 9 only.')
 
 
 def print_grid(grid_):
@@ -62,6 +73,14 @@ def check_winner(grid_):
         return grid_[2]
 
     return None
+
+
+def check_if_draw(grid_):
+    for play in grid_:
+        if type(play) is int:
+            return False
+
+    return True
 
 
 if __name__ == '__main__':
